@@ -7,9 +7,7 @@ const usersRoute = require("./routes/users");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 const bodyValidator = require("./middlewares/bodyValidator");
-
-const HOST = "0.0.0.0";
-const PORT = 5001;
+require("dotenv").config();
 
 const app = express();
 app.use(bodyParser.json());
@@ -60,5 +58,5 @@ app.use("/*", (req, res) => {
   });
 });
 
-app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+app.listen(process.env.port, process.env.host);
+console.log(`Running on http://${process.env.host}:${process.env.port}`);
