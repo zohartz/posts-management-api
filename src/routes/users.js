@@ -8,7 +8,6 @@ const Response = require("../utils/response");
 // login
 router.post("/login", async (req, res) => {
   try {
-    console.log(req.body.email);
     const user = await usersService.getUser(req.body.email, req.body.password);
     const output = {
       id: user.id,
