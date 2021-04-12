@@ -6,7 +6,7 @@ const postsService = require("../services/postsService");
 const Response = require("../utils/response");
 
 // Get all posts
-router.get("/:authorId", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const allUserPosts = await postsService.getPostsByAutor(
       req.params.authorId

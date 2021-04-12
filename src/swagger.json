@@ -1,0 +1,222 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "posts-management-api",
+    "description": "User's posts management "
+  },
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Info on Users"
+    },
+    {
+      "name": "Posts",
+      "description": "Info on Posts"
+    }
+  ],
+  "servers": [
+    {
+      "description": "local",
+      "url": "/api/v1"
+    }
+  ],
+  "paths": {
+    "/posts/{authorId}/": {
+      "get": {
+        "tags": ["Posts"],
+        "summary": "Get Posts By authorId ",
+        "parameters": [
+          {
+            "name": "authorId",
+            "description": "post's author Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/objectId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/SchemaGETbyID"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "500": {
+            "description": "Internal service error"
+          }
+        }
+      }
+    },
+    "/posts": {
+      "post": {
+        "tags": ["Posts"],
+        "summary": "Add Posts",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "description": "add posts",
+            "schema": {
+              "$ref": "#/definitions/SchemaPOST"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "404": {
+            "description": " Not Found",
+            "content": {}
+          },
+          "405": {
+            "description": "Validation exception",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Add User",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "description": "user login",
+            "schema": {
+              "$ref": "#/definitions/UserSchemaPOSTlogin"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "404": {
+            "description": " Not Found",
+            "content": {}
+          },
+          "405": {
+            "description": "Validation exception",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Add User",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "description": "new user",
+            "schema": {
+              "$ref": "#/definitions/UserSchemaPOST"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "404": {
+            "description": " Not Found",
+            "content": {}
+          },
+          "405": {
+            "description": "Validation exception",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SchemaPOST": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorId", "title", "content"],
+      "properties": {
+        "authorId": {
+          "$ref": "#/definitions/objectId"
+        },
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string",
+          "description": "post content"
+        }
+      }
+    },
+    "UserSchemaPOST": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+          "firstName",
+          "lastName",
+          "password",
+          "email"
+      ],
+      "properties": {
+          "firstName": {
+              "type": "string"
+          },
+          "lastName": {
+              "type": "string"
+          },
+          "password": {
+              "type": "string"
+          },
+          "email": {
+              "$ref": "#/definitions/email"
+          }
+      }
+    },
+    "SchemaGETbyID": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {}
+    },
+    "email": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
+      "Example": "abc@gmail.com"
+    },
+    "objectId": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{24}$",
+      "Example": "45cbc4a0e4123f6920000002"
+    },
+    "UserSchemaPOSTlogin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["password", "email"],
+      "properties": {
+        "password": {
+          "type": "string"
+        },
+        "email": {
+          "$ref": "#/definitions/email"
+        }
+      }
+    }
+  }
+}
